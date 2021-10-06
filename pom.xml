@@ -1,0 +1,172 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.mntn</groupId>
+	<artifactId>APITestAutomation</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>APITestAutomation</name>
+	<description>API Test Automation project</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.5.5</version>
+	</parent>
+
+	<properties>
+		<spring-cloud.version>2020.0.4</spring-cloud.version>
+		<spring-cloud-contract.version>3.0.4</spring-cloud-contract.version>
+		<defaultSuiteFiles>testng.xml</defaultSuiteFiles>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jfairy</groupId>
+			<artifactId>jfairy</artifactId>
+			<version>0.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.11.0</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-configuration</groupId>
+			<artifactId>commons-configuration</artifactId>
+			<version>1.10</version>
+		</dependency>
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>6.10</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-contract-verifier</artifactId>
+			<version>3.0.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.intuit.karate</groupId>
+			<artifactId>karate-apache</artifactId>
+			<version>0.9.6</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.intuit.karate</groupId>
+			<artifactId>karate-junit4</artifactId>
+			<version>1.2.0.RC1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.intuit.karate</groupId>
+			<artifactId>karate-netty</artifactId>
+			<version>0.9.3.RC1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>au.com.dius</groupId>
+			<artifactId>pact-jvm-provider-junit</artifactId>
+			<version>4.0.10</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>au.com.dius</groupId>
+			<artifactId>pact-jvm-provider</artifactId>
+			<version>4.0.10</version>
+		</dependency>
+		<dependency>
+			<groupId>au.com.dius</groupId>
+			<artifactId>pact-jvm-consumer</artifactId>
+			<version>4.0.10</version>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.relevantcodes</groupId>
+			<artifactId>extentreports</artifactId>
+			<version>2.41.2</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>sample-api-tests</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<finalName>sample-api-tests</finalName>
+					<excludes>
+						<exclude>src/test/resources/**</exclude>
+						<exclude>**/*.exe</exclude>
+						<exclude>**/*.jar</exclude>
+						<exclude>**/*.zip</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<!-- <plugin> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-contract-maven-plugin</artifactId> 
+				<version>${spring-cloud-contract.version}</version> <extensions>true</extensions> 
+				<configuration> <packageWithBaseClasses>com.mntn.api.person.contracttests</packageWithBaseClasses> -->
+			<!-- <baseClassForTests></baseClassForTests> -->
+			<!-- </configuration> </plugin> -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<suiteXmlFiles>
+						<suiteXmlFile>${defaultSuiteFiles}</suiteXmlFile>
+					</suiteXmlFiles>
+					<testFailureIgnore>false</testFailureIgnore>
+					<skipTests>false</skipTests>
+				</configuration>
+			</plugin>
+		</plugins>
+		<!-- <pluginManagement> <plugins> <plugin> <groupId>org.eclipse.m2e</groupId> 
+			<artifactId>lifecycle-mapping</artifactId> <version>1.0.0</version> <configuration> 
+			<lifecycleMetadata> <pluginExecutions> <pluginExecution> <pluginExecutionFilter> 
+			<groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-contract-maven-plugin</artifactId> 
+			<versionRange>[1.0,)</versionRange> <goals> <goal>converts</goal> </goals> 
+			</pluginExecutionFilter> <action> <execute /> </action> </pluginExecution> 
+			</pluginExecutions> </lifecycleMetadata> </configuration> </plugin> </plugins> 
+			</pluginManagement> -->
+	</build>
+</project>
